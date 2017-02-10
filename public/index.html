@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+
+    <title>Electron Chat</title>
+
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/cover.css" rel="stylesheet">
+    <link href="css/utility.css" rel="stylesheet">
+    <script src="js/angular.min.js"></script>
+    <script src="js/chat.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Insert this line after script imports -->
+    <script>if (window.module) module = window.module;</script>
+
+    <script>
+      require('../lib/renderer.js')
+    </script>
+  </head>
+
+  <body ng-app="chat">
+
+    <div class="site-wrapper" ng-show="state.showHomepage" ng-controller='homepage'>
+
+      <div class="site-wrapper-inner">
+
+        <div class="cover-container">
+
+          <div class="masthead clearfix">
+            <div class="inner">
+              <h3 class="masthead-brand">Electron Chat</h3>
+              <!--<nav>
+                <ul class="nav masthead-nav">
+                  <li class="active"><a href="#">Home</a></li>
+                  <li><a href="#">Features</a></li>
+                  <li><a href="#">Contact</a></li>
+                </ul>
+              </nav>-->
+            </div>
+          </div>
+
+          <div class="inner cover">
+            <p class="lead">Electron Chat is a native chat application built with <a target="_blank" href="http://electron.atom.io/">Electron</a> and the <a target="_blank" href="https://github.com/ibm-cds-labs/simple-notification-service">Simple Notification Service</a></p>
+            <p class="lead">
+              <form ng-submit="start()">
+                <input type="text" class="form-control" placeholder="Enter your name..." ng-model="user.name">
+                <button type="submit" class="btn btn-lg btn-default mt10">Get Chatting</button>
+              </form>
+            </p>
+          </div>
+
+          <div class="mastfoot">
+            <div class="inner">
+              <p>Cover template for <a href="http://getbootstrap.com">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div ng-controller="chatScreen" ng-show='state.showChatScreen' class='container'>
+      
+      <div class='row mt10'>
+
+        <div class="col-md-9">
+          
+          <form ng-submit="sendMsg()">
+            <input type="text" name="msg" class="form-control" ng-model="msg">
+            <button type="submit" class="btn btn-success mt10">Send</button>
+          </form>
+          <hr>
+          <div class="panel panel-default" ng-repeat='msg in state.messages|formatMessages'>
+            <div class="panel-heading">{{ msg.name }} {{ msg.date }}</div>
+            <div class="panel-body">
+              {{ msg.msg }}
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-md-3">
+          <ul class="list-group">
+            <li ng-repeat='user in state.users' class="list-group-item">{{ user.name }}</li>
+          </ul>
+        </div>
+
+      </div>
+
+    </div>
+
+  </body>
+</html>
